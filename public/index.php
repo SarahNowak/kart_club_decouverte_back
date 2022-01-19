@@ -6,7 +6,7 @@ header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Max-Age: 1000");
 header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Authorization, X-Requested-With');
+header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Authorization, X-Requested-With, Accept');
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 return function (array $context) {
     return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
