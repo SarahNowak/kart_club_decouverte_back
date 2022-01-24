@@ -45,6 +45,6 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/api/user/create_user,   roles: PUBLIC_ACCESS }
-        - { path: ^/api/user/current,       roles: ROLE_USER }
+        - { path: ^/api/user/current,       roles: PUBLIC_ACCESS }
         - { path: ^/api,                    roles: PUBLIC_ACCESS }
 
