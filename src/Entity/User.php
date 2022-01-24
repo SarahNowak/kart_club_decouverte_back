@@ -50,7 +50,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="json")
      * @Groups({"user_read"})
      */
-    private $roles = [];
+    private $roles = ['ROLE_USER'];
 
     public function getId(): ?int
     {
