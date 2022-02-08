@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\UserInfoType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,6 +61,27 @@ class UserController extends AbstractController
         return $this->json($user, Response::HTTP_OK, [],[
             'groups' => ['user_read']
         ]);
+    }
+
+     /**
+     * @Route("/{id}", name="edit", methods={"PUT"})
+     */
+    public function edit(User $user, Request $request)
+    {
+        $form = $this->createForm(UserInfoType::class, $user, ['csrf_protection' => false]);
+        $jsonArray = json_decode($request->getContent(), true);
+        $form->submit($jsonArray);
+
+        if ($form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+            return $this->json($user, Response::HTTP_OK, [], [
+                'groups' => ['user_read'],
+            ]);
+        }
+
+        return $this->json([
+            'errors' => (string) $form->getErrors(true),
+        ], Response::HTTP_BAD_REQUEST);
     }
 
 }
