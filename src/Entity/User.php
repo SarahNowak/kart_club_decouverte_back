@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -20,7 +22,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user_read"})
+     * @Groups({"user_read", "memberFamily_browse"})
      */
     private $id;
 
@@ -93,6 +95,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"user_read"})
      */
     private $city;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"user_read"})
+     * status 0:UTILISATEUR 1:MEMBRE 2:INACTIF
+     */
+    private $status = 0;
+
+    /**
+     * @ORM\OneToMany(targetEntity=MemberFamily::class, mappedBy="user")
+     * @Groups({"user_read"})
+     */
+    private $memberFamily;
+
+    public function __construct()
+    {
+        $this->memberFamily = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -276,6 +296,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCity(?string $city): self
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MemberFamily[]
+     */
+    public function getMemberFamily(): Collection
+    {
+        return $this->memberFamily;
+    }
+
+    public function addMemberFamily(MemberFamily $memberFamily): self
+    {
+        if (!$this->memberFamily->contains($memberFamily)) {
+            $this->memberFamily[] = $memberFamily;
+            $memberFamily->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMemberFamily(MemberFamily $memberFamily): self
+    {
+        if ($this->memberFamily->removeElement($memberFamily)) {
+            // set the owning side to null (unless already changed)
+            if ($memberFamily->getUser() === $this) {
+                $memberFamily->setUser(null);
+            }
+        }
 
         return $this;
     }
