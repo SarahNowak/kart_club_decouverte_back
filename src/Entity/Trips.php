@@ -50,40 +50,40 @@ class Trips
     private $date;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="array", length=255)
      * @Groups({"trips_browse", "trips_read"})
      */
-    private $description = [];
+    private $description = [null, null, null, null];
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      * @Groups({"trips_browse", "trips_read"})
      */
     private $classAdult;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      * @Groups({"trips_browse", "trips_read"})
      */
     private $materialAdult;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      * @Groups({"trips_browse", "trips_read"})
      */
     private $tarifAdultMember;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      * @Groups({"trips_browse", "trips_read"})
      */
-    private $TarifAdultExt;
+    private $tarifAdultExt;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"trips_browse", "trips_read"})
      */
-    private $TarifAdult;
+    private $tarifAdult;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -152,45 +152,55 @@ class Trips
     private $tarifJunior;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
+     * @ORM\Column(type="array", length=64)
      * @Groups({"trips_browse", "trips_read"})
      */
-    private $sessionJunior = [];
+    private $sessionJunior = [null, null, null, null, null];
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="array", length=64)
      * @Groups({"trips_browse", "trips_read"})
      */
-    private $photosTrip = [];
+    private $photosTrip = [null, null, null];
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="array", length=64)
      * @Groups({"trips_browse", "trips_read"})
      */
-    private $coordinates = [];
+    private $coordinates = [null, null];
 
     /**
-     * @ORM\Column(type="array", nullable=true)
+     * @ORM\Column(type="array", length=64)
      * @Groups({"trips_browse", "trips_read"})
      */
-    private $sessionYoung = [];
+    private $sessionYoung = [null, null, null, null, null];
 
     /**
-     * @ORM\Column(type="array", nullable=true)
+     * @ORM\Column(type="array", length=64)
      * @Groups({"trips_browse", "trips_read"})
      */
-    private $sessionAdult = [];
+    private $sessionAdult = [null, null, null, null, null];
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
 
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"trips_browse", "trips_read"})
+     */
+    private $status = 1;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -307,24 +317,24 @@ class Trips
 
     public function getTarifAdultExt(): ?string
     {
-        return $this->TarifAdultExt;
+        return $this->tarifAdultExt;
     }
 
-    public function setTarifAdultExt(?string $TarifAdultExt): self
+    public function setTarifAdultExt(?string $tarifAdultExt): self
     {
-        $this->TarifAdultExt = $TarifAdultExt;
+        $this->tarifAdultExt = $tarifAdultExt;
 
         return $this;
     }
 
     public function getTarifAdult(): ?string
     {
-        return $this->TarifAdult;
+        return $this->tarifAdult;
     }
 
-    public function setTarifAdult(?string $TarifAdult): self
+    public function setTarifAdult(?string $tarifAdult): self
     {
-        $this->TarifAdult = $TarifAdult;
+        $this->tarifAdult = $tarifAdult;
 
         return $this;
     }
@@ -522,26 +532,38 @@ class Trips
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
