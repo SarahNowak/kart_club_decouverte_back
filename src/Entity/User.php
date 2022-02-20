@@ -22,7 +22,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user_read", "memberFamily_browse"})
+     * @Groups({"user_read", "memberFamily_browse", "user_trips"})
      */
     private $id;
 
@@ -35,7 +35,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user_read"})
+     * @Groups({"user_read", "user_trips"})
      * @Assert\NotBlank (message="veuillez saisir votre adresse mail")
      * @Assert\Email (message="Veuillez saisir une adresse email valide")
      */
@@ -56,13 +56,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"user_read"})
+     * @Groups({"user_read", "user_trips"})
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"user_read"})
+     * @Groups({"user_read", "user_trips"})
      */
     private $firstName;
 
@@ -109,9 +109,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $memberFamily;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Trips::class, inversedBy="users")
+     * @Groups({"user_trips", "user_read"})
+     */
+    private $trip;
+
     public function __construct()
     {
         $this->memberFamily = new ArrayCollection();
+        $this->trip = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -338,6 +345,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $memberFamily->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Trips[]
+     */
+    public function getTrip(): Collection
+    {
+        return $this->trip;
+    }
+
+    public function addTrip(Trips $trip): self
+    {
+        if (!$this->trip->contains($trip)) {
+            $this->trip[] = $trip;
+        }
+
+        return $this;
+    }
+
+    public function removeTrip(Trips $trip): self
+    {
+        $this->trip->removeElement($trip);
 
         return $this;
     }

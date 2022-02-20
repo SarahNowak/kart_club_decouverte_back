@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MemberFamilyRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -53,6 +55,16 @@ class MemberFamily
      * 
      */
     private $user;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Trips::class, inversedBy="memberFamilies")
+     */
+    private $trip;
+
+    public function __construct()
+    {
+        $this->trip = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -115,6 +127,30 @@ class MemberFamily
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Trips[]
+     */
+    public function getTrip(): Collection
+    {
+        return $this->trip;
+    }
+
+    public function addTrip(Trips $trip): self
+    {
+        if (!$this->trip->contains($trip)) {
+            $this->trip[] = $trip;
+        }
+
+        return $this;
+    }
+
+    public function removeTrip(Trips $trip): self
+    {
+        $this->trip->removeElement($trip);
 
         return $this;
     }

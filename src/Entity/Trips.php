@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TripsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -15,169 +17,169 @@ class Trips
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $imgCard;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $circuit;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $adress;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $date;
 
     /**
      * @ORM\Column(type="array", length=255)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $description = [null, null, null, null];
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $classAdult;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $materialAdult;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $tarifAdultMember;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $tarifAdultExt;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $tarifAdult;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $classYoung;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $materialYoung;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $tarifYoungMember;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $tarifYoungExt;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $tarifYoung;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $classMinJunior;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $classMaxJunior;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $materialJunior;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $tarifJuniorMember;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $tarifJuniorExt;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $tarifJunior;
 
     /**
      * @ORM\Column(type="array", length=64)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $sessionJunior = [null, null, null, null, null];
 
     /**
      * @ORM\Column(type="array", length=64)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $photosTrip = [null, null, null];
 
     /**
      * @ORM\Column(type="array", length=64)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $coordinates = [null, null];
 
     /**
      * @ORM\Column(type="array", length=64)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $sessionYoung = [null, null, null, null, null];
 
     /**
      * @ORM\Column(type="array", length=64)
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $sessionAdult = [null, null, null, null, null];
 
@@ -193,13 +195,26 @@ class Trips
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"trips_browse", "trips_read"})
+     * @Groups({"trips_browse", "trips_read", "user_read"})
      */
     private $status = 1;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="trip")
+     * 
+     */
+    private $users;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=MemberFamily::class, mappedBy="trip")
+     */
+    private $memberFamilies;
 
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->users = new ArrayCollection();
+        $this->memberFamilies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -564,6 +579,60 @@ class Trips
     public function setStatus(int $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addTrip($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeTrip($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MemberFamily[]
+     */
+    public function getMemberFamilies(): Collection
+    {
+        return $this->memberFamilies;
+    }
+
+    public function addMemberFamily(MemberFamily $memberFamily): self
+    {
+        if (!$this->memberFamilies->contains($memberFamily)) {
+            $this->memberFamilies[] = $memberFamily;
+            $memberFamily->addTrip($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMemberFamily(MemberFamily $memberFamily): self
+    {
+        if ($this->memberFamilies->removeElement($memberFamily)) {
+            $memberFamily->removeTrip($this);
+        }
 
         return $this;
     }
