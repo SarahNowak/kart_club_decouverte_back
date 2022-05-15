@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\MemberFamily;
 use App\Entity\Trips;
 use App\Form\TripsType;
+use App\Repository\MemberFamilyRepository;
 use App\Repository\TripsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -99,6 +101,27 @@ class TripsController extends AbstractController
         $em->persist($trips);
         $em->flush();
 
+        return $this->json(null, Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * Methode permettant d'inscrire un membre famille à une sortie'
+     * 
+     * @Route("/subscribe/memberfamily/{id}", name="add_subscribe", methods={"POST"}, requirements={"id"="\d+"})
+     */
+    public function addSubscribeMemberFamily(Trips $trips)
+    {   
+        return $this->json($trips, Response::HTTP_CREATED, [], [
+            'groups' => ['user_trips'],
+        ]);
+        
+    }
+
+    /**
+     * @Route("/subscribe/memberfamily/{id}", name="delete_subscribe", methods={"DELETE"}, requirements={"id"="\d+"})
+     */
+    public function deleteSubscribeMemberFamily(Trips $trips)
+    {
         return $this->json(null, Response::HTTP_NO_CONTENT);
     }
 }
