@@ -58,7 +58,7 @@ class MemberFamily
 
     /**
      * @ORM\ManyToMany(targetEntity=Trips::class, inversedBy="memberFamilies")
-     *  @Groups({"user_trips", "user_read"})
+     *  @Groups({"user_trips", "user_read", "memberFamily_trips"})
      */
     private $trip;
 

@@ -107,21 +107,57 @@ class TripsController extends AbstractController
     /**
      * Methode permettant d'inscrire un membre famille à une sortie'
      * 
-     * @Route("/subscribe/memberfamily/{id}", name="add_subscribe", methods={"POST"}, requirements={"id"="\d+"})
+     * @Route("/subscribe/{id}/memberfamily", name="add_subscribe_member_family", methods={"POST"}, requirements={"id"="\d+"})
      */
-    public function addSubscribeMemberFamily(Trips $trips)
+    public function addSubscribeMemberFamily(Trips $trips, Request $request, MemberFamilyRepository $memberFamilyRepository)
     {   
-        return $this->json($trips, Response::HTTP_CREATED, [], [
-            'groups' => ['user_trips'],
+        
+        if(!$trips){
+            throw new NotFoundHttpException('Pas de sortie trouvée');
+        }
+        
+        $json = $request->getContent();
+        // on décode $json pour transforme les données en tableau associatif
+        $jsonArray = json_decode($json, true);
+
+        $idMemberFamily = $jsonArray['memberFamily'];
+
+        $memberFamily = $memberFamilyRepository->find($idMemberFamily);
+
+        $memberFamily->addTrip($trips);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($memberFamily);
+        $em->flush();
+
+        return $this->json($memberFamily, Response::HTTP_CREATED, [], [
+            'groups' => ['memberFamily_trips'],
         ]);
         
     }
 
     /**
-     * @Route("/subscribe/memberfamily/{id}", name="delete_subscribe", methods={"DELETE"}, requirements={"id"="\d+"})
+     * @Route("/subscribe/{id}/memberfamily", name="delete_subscribe_member_family", methods={"DELETE"}, requirements={"id"="\d+"})
      */
-    public function deleteSubscribeMemberFamily(Trips $trips)
+    public function deleteSubscribeMemberFamily(Trips $trips, Request $request, MemberFamilyRepository $memberFamilyRepository)
     {
+        if(!$trips){
+            throw new NotFoundHttpException('Pas de sortie trouvée');
+        }
+        $json = $request->getContent();
+        // on décode $json pour transforme les données en tableau associatif
+        $jsonArray = json_decode($json, true);
+
+        $idMemberFamily = $jsonArray['memberFamily'];
+
+        $memberFamily = $memberFamilyRepository->find($idMemberFamily);
+
+        $memberFamily->removeTrip($trips);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($memberFamily);
+        $em->flush();
+
         return $this->json(null, Response::HTTP_NO_CONTENT);
     }
 }

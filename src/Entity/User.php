@@ -105,7 +105,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=MemberFamily::class, mappedBy="user")
-     * @Groups({"user_read"})
+     * @Groups({"user_read", "memberFamily_trips"})
      */
     private $memberFamily;
 
